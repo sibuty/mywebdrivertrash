@@ -23,9 +23,9 @@ public class Main {
             driver.get("http://www.wday.ru/krasota-zdorovie/beauty-gid/kak-solntse-10-samyih-obvorojitelnyih-ryijih-krasotok-samaryi-golosuy/12/");
 
             try {
-                TimeUnit.SECONDS.sleep(random.nextInt(5) + 2);
+                TimeUnit.SECONDS.sleep(random.nextInt(5) + 5);
                 ((JavascriptExecutor) driver).executeScript("document.getElementById('poll4009-answer-48700').click()");
-                TimeUnit.SECONDS.sleep(random.nextInt(5) + 2);
+                TimeUnit.SECONDS.sleep(random.nextInt(200) + 30);
 
             } catch (Exception e) {
                 e.printStackTrace();
