@@ -1,9 +1,11 @@
 package main;
 
+import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.*;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -15,8 +17,23 @@ public class Main {
     public static void main(String[] args) {
 
         final Random random = new Random();
-        System.setProperty("webdriver.chrome.driver",
-                "/home/glotemz/projects/myhackervote/src/main/resources/chromedriver");
+        InputStream in = Main.class.getClassLoader().getResourceAsStream("chromedriver.exe");
+        File file = new File("chromedriver.exe");
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            IOUtils.copy(in, out);
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
 
         for (int i = 0; i < 250; i++) {
             WebDriver driver = new ChromeDriver();
