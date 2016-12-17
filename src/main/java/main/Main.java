@@ -41,10 +41,13 @@ public class Main {
             driver.get("http://www.wday.ru/moda-shopping/style/koroleva-woman-s-day-2016-40-pobeditelnits-konkursov-krasotyi/10/");
 
             try {
-                TimeUnit.SECONDS.sleep(random.nextInt(5) + 5);
+                //TimeUnit.SECONDS.sleep(random.nextInt(5) + 5);
+                TimeUnit.SECONDS.sleep(2);
                 //((JavascriptExecutor) driver).executeScript("document.getElementById('poll4009-answer-48700').click()");
-                ((JavascriptExecutor) driver).executeScript("document.getElementById('poll6482-answer-81940').click()");
-                TimeUnit.SECONDS.sleep(random.nextInt(200) + 30);
+                //((JavascriptExecutor) driver).executeScript("document.getElementById('poll6482-answer-81940').click()");
+                ((JavascriptExecutor) driver).executeScript("document.getElementById('poll6482-answer-81952').click()");
+                //TimeUnit.SECONDS.sleep(random.nextInt(200) + 30);
+                TimeUnit.SECONDS.sleep(1);
 
             } catch (Exception e) {
                 e.printStackTrace();
