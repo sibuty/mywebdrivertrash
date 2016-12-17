@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.*;
+import java.util.Scanner;
 
 /**
  * Created by glotemz on 16.10.15.
@@ -11,12 +12,69 @@ import java.io.*;
 public class Main {
 
     public static void main(String[] args) {
-        initChromeDriverWindows();
+        SchoolHelper schoolHelper = null;
+        try {
 
-        SchoolHelper schoolHelper = new SchoolHelper(new ChromeDriver());
+            initChromeDriverWindows();
 
-        String input = System.console().readLine();
-        schoolHelper.selectTown(Integer.parseInt(input));
+            schoolHelper = new SchoolHelper(new ChromeDriver());
+
+            System.out.println("Введите логин и пароль, последовательно, через пробел");
+
+            int selectIndex = 5;
+            String login = null;
+            String password = null;
+            Scanner scanner = new Scanner(System.in);
+
+            try {
+                while (scanner.hasNext()) {
+                    login = scanner.next();
+                    password = scanner.next();
+                    break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            schoolHelper.login(login, password);
+
+            System.out.println("Введите номер города из списка 2 - для Самары, 5 - для Тольятти");
+
+            try {
+                while (scanner.hasNext()) {
+                    selectIndex = scanner.nextInt();
+                    break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("Ждите заполнение формы 1-3 секунды");
+
+            try {
+                schoolHelper.selectTown(selectIndex);
+                schoolHelper.fillApplicantData();
+                schoolHelper.fillChildData();
+                schoolHelper.fillChildDocsData();
+            } catch (Exception e) {
+                e.printStackTrace();
+                schoolHelper.exit();
+                deleteCoppiedFile();
+            }
+
+            System.out.println("Форма заполнена, введите капчу и отправьте заявку.\nПосле, для корректного закрытия напишите f и нажмите Enter");
+
+            while (scanner.hasNext()) {
+                schoolHelper.exit();
+                deleteCoppiedFile();
+                break;
+            }
+        } finally {
+            if (schoolHelper != null) {
+                schoolHelper.exit();
+            }
+            deleteCoppiedFile();
+        }
     }
 
     public static void initChromeDriverWindows() {
@@ -37,5 +95,9 @@ public class Main {
         }
 
         System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+    }
+
+    public static void deleteCoppiedFile() {
+        new File(System.getProperty("webdriver.chrome.driver")).delete();
     }
 }
