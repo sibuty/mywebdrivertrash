@@ -19,13 +19,20 @@ public class Main {
 
             schoolHelper = new SchoolHelper(new ChromeDriver());
 
-            System.out.println("Введите логин и пароль, последовательно, через пробел");
-
-            int selectIndex = 5;
-            String login = null;
-            String password = null;
             Scanner scanner = new Scanner(System.in);
 
+            File file = new File("auth.txt");
+            if (file.exists()) {
+                try {
+                    scanner = new Scanner(new FileInputStream(file));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Введите логин и пароль, последовательно, через пробел");
+            }
+            String login = null;
+            String password = null;
             try {
                 while (scanner.hasNext()) {
                     login = scanner.next();
@@ -36,10 +43,12 @@ public class Main {
                 e.printStackTrace();
             }
 
+            scanner = new Scanner(System.in);
+
             schoolHelper.login(login, password);
 
+            int selectIndex = 5;
             System.out.println("Введите номер города из списка 2 - для Самары, 5 - для Тольятти");
-
             try {
                 while (scanner.hasNext()) {
                     selectIndex = scanner.nextInt();
