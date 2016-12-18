@@ -9,8 +9,8 @@ import org.openqa.selenium.support.ui.Select;
  */
 public class TestHelper extends SchoolHelper {
 
-    public TestHelper(ChromeDriver driver) {
-        super(driver);
+    public TestHelper(ChromeDriver driver, String schoolName) {
+        super(driver, schoolName);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class TestHelper extends SchoolHelper {
         driver.findElement(By.id("Children_FirstName")).sendKeys("Ааббввсс");
         driver.findElement(By.id("Children_MiddleName")).sendKeys("Ааббввсс");
         driver.findElement(By.id("Children_BirthDate")).sendKeys("11.03.2009");
-        driver.findElement(By.id("Children_BirthPlace")).sendKeys("Город Тольяти");
+        driver.findElement(By.id("Children_BirthPlace")).sendKeys("Город Тольятти");
         driver.findElement(By.id("Children_Series")).sendKeys("II-АА");
         driver.findElement(By.id("Children_Number")).sendKeys("112233");
     }

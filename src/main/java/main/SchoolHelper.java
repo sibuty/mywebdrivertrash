@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,9 +17,11 @@ public class SchoolHelper {
 
     public ChromeDriver driver;
     public WebDriverWait wait;
+    public String schoolName;
 
-    public SchoolHelper(ChromeDriver driver) {
+    public SchoolHelper(ChromeDriver driver, String schoolName) {
         this.driver = driver;
+        this.schoolName = schoolName;
         this.driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
         this.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         this.driver.get("https://es.asurso.ru/");
@@ -41,7 +44,7 @@ public class SchoolHelper {
         driver.findElement(By.id("Children_FirstName")).sendKeys("Милана");
         driver.findElement(By.id("Children_MiddleName")).sendKeys("Алексеевна");
         driver.findElement(By.id("Children_BirthDate")).sendKeys("24.02.2010");
-        driver.findElement(By.id("Children_BirthPlace")).sendKeys("Город Тольяти");
+        driver.findElement(By.id("Children_BirthPlace")).sendKeys("Город Тольятти");
         driver.findElement(By.id("Children_Series")).sendKeys("II-ЕР");
         driver.findElement(By.id("Children_Number")).sendKeys("637833");
     }
@@ -58,6 +61,15 @@ public class SchoolHelper {
         applySchoolButton.click();
         waitSelect();
         new Select(driver.findElement(By.id("Institution"))).selectByIndex(16);
+        Select schoolSelect = new Select(driver.findElement(By.id("Institution")));
+        List<WebElement> schoolOptions = schoolSelect.getOptions();
+        for (int i = 0; i < schoolOptions.size(); i++) {
+            WebElement webElement = schoolOptions.get(i);
+            if (webElement.getText().contains(schoolName)) {
+                schoolSelect.selectByIndex(i);
+                break;
+            }
+        }
         new Select(driver.findElement(By.id("Group"))).selectByIndex(1);
         WebElement licenseCheckBox = driver.findElement(By.id("LicenseAggrement"));
         waitElement(licenseCheckBox);

@@ -17,8 +17,6 @@ public class Main {
 
             initChromeDriverWindows();
 
-            schoolHelper = new SchoolHelper(new ChromeDriver());
-
             Scanner scanner = new Scanner(System.in);
 
             File file = new File("auth.txt");
@@ -29,19 +27,23 @@ public class Main {
                     e.printStackTrace();
                 }
             } else {
-                System.out.println("Введите логин и пароль, последовательно, через пробел");
+                System.out.println("Введите логин и пароль, название учереждения, последовательно, через пробел");
             }
             String login = null;
             String password = null;
+            String schoolName = null;
             try {
                 while (scanner.hasNext()) {
                     login = scanner.next();
                     password = scanner.next();
+                    schoolName = scanner.next();
                     break;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            schoolHelper = new SchoolHelper(new ChromeDriver(), schoolName);
 
             scanner = new Scanner(System.in);
 
