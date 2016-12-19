@@ -60,7 +60,6 @@ public class SchoolHelper {
         waitElement(applySchoolButton);
         applySchoolButton.click();
         waitSelect();
-        new Select(driver.findElement(By.id("Institution"))).selectByIndex(16);
         Select schoolSelect = new Select(driver.findElement(By.id("Institution")));
         List<WebElement> schoolOptions = schoolSelect.getOptions();
         for (int i = 0; i < schoolOptions.size(); i++) {
